@@ -17,6 +17,13 @@ header {
 h4 {
     color: red;
     font-size: 80px;
+    text-align: center;
+}
+
+h5 {
+    color: green;
+    font-size: 40px;
+    text-align: center;
 }
 
 ul {
@@ -24,6 +31,7 @@ ul {
     margin: 0;
     padding: 0;
     display: inline-block;
+    
 }
 
 li {
