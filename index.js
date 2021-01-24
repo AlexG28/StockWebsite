@@ -1,6 +1,15 @@
 // list of tickers is 
 //var banks = ['jpm', 'bac', 'wfc', 'c', 'gs']
-var banks = {'name': 'Banks', 'symbols': ['jpm', 'bac', 'wfc', 'c', 'gs']}
+var banks = {'symbols': ['jpm', 'bac', 'wfc', 'c', 'gs']}
+var IT = {'symbols' : ['aapl', 'goog', 'amzn', 'msft', 'fb']}
+
+
+var button1 = document.getElementById("ITrefresh");
+button1.onclick = function (IT) {
+    refresh(IT);
+}
+
+
 
 
 async function getData(ticker) {
@@ -10,15 +19,16 @@ async function getData(ticker) {
     const data = await response.json();
     console.log(data);
     var price = (data.quote.latestPrice).toFixed(2).toString();
-    return price;
+    var companyName = data.quote.companyName.toString();
+    return [price,companyName];
 }
 
-refresh();
+refresh(banks);
 
 //var myVar = setInterval(refresh, 5000); refresh every 5 seconds 
 
-async function refresh(){
-    var output = await updateList(banks['symbols']);
+async function refresh(tickers){
+    var output = await updateList(tickers['symbols']);
     //document.getElementById('price').innerHTML = output;
     
     // add the data into the table
@@ -26,7 +36,7 @@ async function refresh(){
     let dataHtml = '';
 
     for (i = 0; i < output.length; i++) {
-        dataHtml += `<tr> <td>${output[i].ticker}</td>  <td>${output[i].price}</td> </tr>`;
+        dataHtml += `<tr><td>${output[i].name}</td> <td>${output[i].ticker.toUpperCase()}</td>  <td>${output[i].price}</td> </tr>`;
     }
     tableBody.innerHTML = dataHtml;
 }
@@ -37,9 +47,9 @@ async function updateList(tickers) {
     var outputArray = [];
 
     for (i = 0; i < tickers.length; i++) {
-        price = await getData(tickers[i]);
+        data = await getData(tickers[i]);
             
-        temparray = {'ticker' : tickers[i] , 'price' : price};
+        temparray = {'ticker' : tickers[i] , 'price' : data[0], 'name' : data[1]};
         outputArray.push(temparray);
     }
     
