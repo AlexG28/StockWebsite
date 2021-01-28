@@ -1,15 +1,11 @@
-// list of tickers is 
-//var banks = ['jpm', 'bac', 'wfc', 'c', 'gs']
-var banks = {'symbols': ['jpm', 'bac', 'wfc', 'c', 'gs']}
-var IT = {'symbols' : ['aapl', 'goog', 'amzn', 'msft', 'fb']}
+homePageTickers = [
+    {name : 'banks', symbols: ['jpm', 'bac', 'wfc', 'c', 'gs']},
+    {name: 'IT', symbols : ['aapl', 'goog', 'amzn', 'msft', 'fb']}
+]
 
 
-var button1 = document.getElementById("ITrefresh");
-button1.onclick = function (IT) {
-    refresh(IT);
-}
-
-
+var banks = {name : 'banks', symbols: ['jpm', 'bac', 'wfc', 'c', 'gs']}
+var IT = {name: 'IT', symbols : ['aapl', 'goog', 'amzn', 'msft', 'fb']}
 
 
 async function getData(ticker) {
@@ -23,21 +19,33 @@ async function getData(ticker) {
     return [price,companyName];
 }
 
-refresh(banks);
+refresh(homePageTickers);
 
-//var myVar = setInterval(refresh, 5000); refresh every 5 seconds 
+//var myVar = setInterval(refresh(banks), 5000); refresh every 5 seconds 
 
 async function refresh(tickers){
-    var output = await updateList(tickers['symbols']);
-    //document.getElementById('price').innerHTML = output;
-    
-    // add the data into the table
-    const tableBody = document.getElementById('tableData');
-    let dataHtml = '';
 
-    for (i = 0; i < output.length; i++) {
-        dataHtml += `<tr><td>${output[i].name}</td> <td>${output[i].ticker.toUpperCase()}</td>  <td>${output[i].price}</td> </tr>`;
+    const tableBody = document.getElementById('tableData');
+    let dataHtml = ``;
+    for (j = 0; j < tickers.length; j++)
+    {
+        var output = await updateList(tickers[j].symbols);
+        
+        dataHtml += `
+            <thread>
+                <tr>
+                    <th>${tickers[j].name}</th>
+                    <th>Ticker</th>
+                    <th>Price</th>
+                </tr>
+            </thread>
+        
+        `;
+        for (i = 0; i < output.length; i++) {
+            dataHtml += `<tr><td>${output[i].name}</td> <td>${output[i].ticker.toUpperCase()}</td>  <td>${output[i].price}</td> </tr>`;
+        }
     }
+
     tableBody.innerHTML = dataHtml;
 }
 
