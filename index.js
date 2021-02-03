@@ -33,17 +33,17 @@ async function refresh(tickers){
         var output = await updateList(tickers[j].symbols);
         
         dataHtml += `
-            <table>
-                <thread>
-                    <tr>
-                        <th>${tickers[j].name}</th>
-                        <th>Ticker</th>
-                        <th>Price</th>
-                        <th>Change</th>
-                        <th>Change percent</th>
-                    </tr>
-                </thread>
-            </table>
+            
+            <thread>
+                <tr>
+                    <th>${tickers[j].name}</th>
+                    <th>Ticker</th>
+                    <th>Price</th>
+                    <th>Change</th>
+                    <th>Change percent</th>
+                </tr>
+            </thread>
+            
         `;
         
         for (i = 0; i < output.length; i++) {
