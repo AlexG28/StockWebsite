@@ -16,7 +16,8 @@ async function getData(ticker) {
     console.log(data);
     var price = (data.quote.latestPrice).toFixed(2).toString();
     var companyName = data.quote.companyName.toString();
-    return [price,companyName];
+    var change = data.quote.change.toString();
+    return [price,companyName,change];
 }
 
 refresh(homePageTickers);
@@ -32,17 +33,23 @@ async function refresh(tickers){
         var output = await updateList(tickers[j].symbols);
         
         dataHtml += `
-            <thread>
-                <tr>
-                    <th>${tickers[j].name}</th>
-                    <th>Ticker</th>
-                    <th>Price</th>
-                </tr>
-            </thread>
-        
+            <table>
+                <thread>
+                    <tr>
+                        <th>${tickers[j].name}</th>
+                        <th>Ticker</th>
+                        <th>Price</th>
+                        <th>Change</th>
+                        <th>Change percent</th>
+                    </tr>
+                </thread>
+            </table>
         `;
+        
         for (i = 0; i < output.length; i++) {
-            dataHtml += `<tr><td>${output[i].name}</td> <td>${output[i].ticker.toUpperCase()}</td>  <td>${output[i].price}</td> </tr>`;
+            var dailyChange = ((output[i].change / output[i].price) * 100 ).toFixed(4);
+            dataHtml += `<tr><td>${output[i].name}</td> <td>${output[i].ticker.toUpperCase()}</td> 
+            <td>${output[i].price}</td> <td>${output[i].change}</td> <td>${dailyChange}</td></tr>`;
         }
     }
 
@@ -57,7 +64,7 @@ async function updateList(tickers) {
     for (i = 0; i < tickers.length; i++) {
         data = await getData(tickers[i]);
             
-        temparray = {'ticker' : tickers[i] , 'price' : data[0], 'name' : data[1]};
+        temparray = {'ticker' : tickers[i] , 'price' : data[0], 'name' : data[1], 'change' : data[2]};
         outputArray.push(temparray);
     }
     
