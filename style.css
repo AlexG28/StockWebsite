@@ -62,3 +62,29 @@ th {
 tr:nth-child(even) {
     background-color: lightgreen; 
 }
+
+.search-box{
+    overflow:hidden;
+    
+}
+.search-box a {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    height: 50px;
+    transform: translate(-50%, -50%);
+    background: yellowgreen;
+    border-radius: 40px;
+    padding: 10px;
+}
+
+.search-btn {
+    color: red;
+    margin:auto;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background: red;
+    display: flex;
+
+}

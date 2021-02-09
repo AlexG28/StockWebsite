@@ -40,7 +40,7 @@ async function refresh(tickers){
                     <th>Ticker</th>
                     <th>Price</th>
                     <th>Change</th>
-                    <th>Change percent</th>
+                    <th>% Change</th>
                 </tr>
             </thread>
             
